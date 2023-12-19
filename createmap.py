@@ -42,18 +42,26 @@ def plot_map(sf, x_lim = None, y_lim = None, figsize = (11,9)):
         y = [i[1] for i in shape.shape.points[:]]
         plt.plot(x, y, 'k')
         
-        if (x_lim == None) & (y_lim == None):
-            x0 = np.mean(x)
-            y0 = np.mean(y)
-            plt.text(x0, y0, id, fontsize=10)
+        # if (x_lim == None) & (y_lim == None):
+        #     x0 = np.mean(x)
+        #     y0 = np.mean(y)
+        #     plt.text(x0, y0, id, fontsize=10)
         id = id+1
     
     if (x_lim != None) & (y_lim != None):     
         plt.xlim(x_lim)
         plt.ylim(y_lim)
+    plt.show()
 
 #calling the function and passing required parameters to plot the full map
-plot_map(sf)
+#plot_map(sf)
+
+# trying with geopandas
+map_df = gpd.read_file(shp_path)
+map_df.plot()
+plt.show()
+
+
 
 # BUFFERING 
 
