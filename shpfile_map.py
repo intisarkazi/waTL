@@ -12,7 +12,7 @@ import geopandas as gpd
 T1_path = r"C:\Users\chand\Desktop\ICPxWP\Sample_data\T1\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_Shapefile\Legislated_Lands_and_Waters_DBCA_011.shp"
 T2_path = r"C:\Users\chand\Desktop\ICPxWP\Sample_data\T2\Clearing_Regs_Enviro_Sensitive_Areas_DWER_046_WA_GDA2020_Public_Shapefile\Clearing_Regs_Enviro_Sensitive_Areas_DWER_046.shp"
 
-# PLOTTING
+# PLOTTING with geopandas
 T1_df = gpd.read_file(T1_path)
 T2_df = gpd.read_file(T2_path)
 
@@ -22,7 +22,6 @@ T1_df.plot(ax=ax, color='blue')
 T2_df.plot(ax=ax, color='red')
 plt.legend()
 plt.show()
-
 
 # BUFFERING 
 
