@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 import json
 import pandas as pd
+import geopandas as gpd
 import plotly.express as px
 import requests, getpass
 
@@ -20,7 +21,7 @@ import requests, getpass
 
 
 #Automating data snapshot downloads
-
+'''
 def downloadData(folderName, fileName, userId, dataURL):
 
     #password = getpass.getpass()
@@ -57,15 +58,31 @@ folderName = "Property_and_Planning"
 fileName = "Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON.zip"
 userId = "rehaab.syed@student.curtin.edu.au"
 data = downloadData(folderName, fileName, userId, dataURL)
+'''
+
+#load file with geopandas
+T1_path = r"C:\Users\chand\Desktop\ICPxWP\Sample_data\T1\JSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public.geojson"
+T1_df = gpd.read_file(T1_path)
+#print(T1_df.columns)
+'''
+Index(['leg_pin', 'leg_poly_area', 'leg_class', 'leg_identifier',
+       'leg_purpose', 'leg_vesting', 'leg_name', 'leg_name_status', 'leg_iucn',
+       'leg_tenure', 'leg_act', 'leg_category', 'leg_notes',
+       'leg_agreement_party', 'leg_classification', 'leg_regno',
+       'st_area_shape_', 'st_perimeter_shape_', 'geometry'],
+      dtype='object'). 
+'''
+#f'ig, ax = plt.subplots()
 
 # PLOTTING with mapbox
-fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
+fig = px.choropleth_mapbox(T1_df, geojson=T1_path, 
+                           locations = T1_df['leg_identifier'], 
+                           color_discrete_constant="red",
                            color_continuous_scale="Viridis",
                            range_color=(0, 12),
                            mapbox_style="carto-positron",
                            zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
                            opacity=0.5,
-                           labels={'unemp':'unemployment rate'}
                           )
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 fig.show()
