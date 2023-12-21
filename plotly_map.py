@@ -12,19 +12,19 @@ import requests, getpass
 
 #for now load one file
 #https://www.geeksforgeeks.org/read-json-file-using-python/
-'''
-fpath = r"C:\Users\chand\Desktop\ICPxWP\Sample_data\T1\JSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public.geojson"
-fn = open(fpath)
-data = json.load(fn)
-df = pd.read_csv(fn)
-'''
+
+# fpath = r"C:\Users\chand\Desktop\ICPxWP\Sample_data\T1\JSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON\Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public.geojson"
+# fn = open(fpath)
+# data = json.load(fn)
+# df = pd.read_csv(fn)
+
 
 #Automating data snapshot downloads
 
 def downloadData(folderName, fileName, userId, dataURL):
 
-    password = getpass.getpass()
-
+    #password = getpass.getpass()
+    password= "Nunzoi88$"
     #rqst for an access token for authentication. Requested from a tokenRequestUrl using OAuth 2.0 password grant type
     tokenRequestUrl = "https://sso.slip.wa.gov.au/as/token.oauth2"
     tokenRequestHeaders = { 'Authorization' : 'Basic ZGlyZWN0LWRvd25sb2Fk'}
@@ -41,16 +41,18 @@ def downloadData(folderName, fileName, userId, dataURL):
         if dataDownloadResponse.status_code == 200:
             #with open(fileName, 'wb') as f:
             #    f.write(dataDownloadResponse.content)
-            data = json.load(dataDownloadResponse)
+            #data = json.load(dataDownloadResponse)
+            data = dataDownloadResponse.json()
+            return data
 
         else:
             print("Error download file with error " + str(dataDownloadResponse.status_code) + "-" + dataDownloadResponse.text)
+            return None
     else:
         print("Error getting token: " + str(tokenResponse.status_code) + "-" + tokenResponse.text)
+        return None
 
-    return data
-
-dataURL= https://direct-download.slip.wa.gov.au/datadownload/Property_and_Planning/Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON.zip
+dataURL= r"https://direct-download.slip.wa.gov.au/datadownload/Property_and_Planning/Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON.zip"
 folderName = "Property_and_Planning"
 fileName = "Legislated_Lands_and_Waters_DBCA_011_WA_GDA2020_Public_GeoJSON.zip"
 userId = "rehaab.syed@student.curtin.edu.au"
